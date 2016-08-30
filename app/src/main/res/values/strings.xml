@@ -1,3 +1,57 @@
 <resources>
     <string name="app_name">MyMqtt</string>
+    <string name="register"><u>Click here for a new registration</u></string>
+    <string name="action_settings">Settings</string>
+    <string name="logoiclose"></string>
+
+    <style name="DefaultButtonText">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#979797</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:shadowColor">#f9f9f9</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
+
+    <string name="ColoreSfondo">#596373</string>
+    <string name="ArancioCustom">#ea5b0b</string>
+
+    <string name="logo">TODO</string>
+    <string name="logomaggi1">TODO</string>
+    <string name="welcome">Welcome </string>
+    <string name="toMyClose">to MyClose</string>
+    <string name="mobileapp">mobile app</string>
+    <string name="Email">E-mail</string>
+    <string name="Password">Password</string>
+    <string name="Rememberme">Remember me</string>
+    <string name="RecuperaPassENG">Recovery password</string>
+    <string name="ENTER">ENTER</string>
+    <string name="logomaggi">TODO</string>
+    <string name="Clearall">Clear all</string>
+    <string name="Close">Close</string>
+    <string name="SendAllITA">Tutte le impostazioni sono state inviate. Attendere conferma dal Master</string>
+    <string name="SendAllENG">All custom settings have been send to the master. Wait for the answer from Master</string>
+    <string name="CommSentITA">Comando inviato</string>
+    <string name="CommNOTSentITA">Comando NON inviato</string>
+    <string name="CommSentENG">Command Sent</string>
+    <string name="CommNOTSentENG">Command NOT Sent</string>
+    <string name="ModEffettuateENG">The master is UPDATED</string>
+    <string name="InfoText">Info</string>
+    <string name="ErrENG">ERROR IN THE PARAMETERS</string>
+    <string name="ErrorInvioEng">ERROR WHILE SENDING THE MESSAGE - NOT ACK</string>
+
+    <string name="CustomPref">IsCustomOn</string>
+    <string name="TopPref">IsTopOn</string>
+    <string name="StandardPref">IsStandardOn</string>
+
+    <string name="TestoInfoOne">Testo da inserire per info 1</string>
+    <string name="TestoInfoTwo">Testo da inserire per info 2</string>
+    <string name="TestoInfoThree">Testo da inserire per info 3</string>
+
+
 </resources>

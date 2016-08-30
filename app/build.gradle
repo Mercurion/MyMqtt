@@ -5,13 +5,12 @@ repositories {
     }
 }
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.0"
-
+    compileSdkVersion 'android-N'
+    buildToolsVersion '24.0.0'
     defaultConfig {
         applicationId "com.myclose.mymqtt"
         minSdkVersion 19
-        targetSdkVersion 24
+        targetSdkVersion 'N'
         versionCode 1
         versionName "1.0"
     }
@@ -21,16 +20,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:support-v4:21.0.3'
     compile 'com.android.support:appcompat-v7:24.2.0'
+    compile files('libs/ormlite-android-4.48.jar')
+    compile files('libs/ormlite-core-4.48.jar')
     compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.0.2'
     compile('org.eclipse.paho:org.eclipse.paho.android.service:1.0.2') {
         exclude module: 'support-v4'
     }
-    compile files('libs/ormlite-android-4.48.jar')
-    compile files('libs/ormlite-core-4.48.jar')
 }
