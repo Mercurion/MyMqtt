@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import net.myclose.mycloseR.R;
+import com.myclose.mymqtt.R;
 
 import java.util.ArrayList;
 import java.util.List;
