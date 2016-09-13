@@ -1,0 +1,354 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:orientation="vertical"
+    android:weightSum="13" >
+
+    <ImageView
+        android:id="@+id/logo"
+        android:contentDescription="@string/logomaggi1"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:padding="0dp"
+        android:background="#000000"
+        android:src="@drawable/logo_myclose"
+        android:layout_weight="3"/>
+
+    <Button
+        android:id="@+id/myphone"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="0dp"
+        android:layout_weight="2"
+        android:background="@drawable/my_numbers_eng" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#959fa8"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp" >
+
+        <Button
+            android:id="@+id/bcolor"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:background="#1C202A"
+            android:onClick="onPickNumberButton" />
+
+        <TextView
+            android:id="@+id/number_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="onPickNumberButton"
+            android:paddingBottom="10dp"
+            android:text="NUMBER 1"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/telefonobotton"
+            android:gravity="center"
+            android:onClick="onPickNumberButton" />
+
+        <TextView
+            android:id="@+id/number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:text=""
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/bcolornone"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/oknumbert" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="#959fa8"
+        android:paddingBottom="10dp" >
+
+        <Button
+            android:id="@+id/bcolor1"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:background="#1C202A"
+            android:onClick="onPickNumberButton" />
+
+        <TextView
+            android:id="@+id/number_txt1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="onPickNumberButton"
+            android:paddingBottom="10dp"
+            android:text="NUMBER 2"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/telefonobotton"
+            android:gravity="center"
+            android:onClick="onPickNumberButton" />
+
+        <TextView
+            android:id="@+id/number1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:text=""
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/bcolornone1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/oknumbert" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="#959fa8"
+        android:paddingBottom="10dp" >
+
+        <Button
+            android:id="@+id/bcolor2"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:background="#1C202A"
+            android:onClick="onPickNumberButton" />
+
+        <TextView
+            android:id="@+id/number_txt2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="onPickNumberButton"
+            android:paddingBottom="10dp"
+            android:text="NUMBER 3"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn3"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/telefonobotton"
+            android:gravity="center"
+            android:onClick="onPickNumberButton" />
+
+        <TextView
+            android:id="@+id/number2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:text=""
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/bcolornone2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/oknumbert" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="#959fa8"
+        android:paddingBottom="10dp" >
+
+        <Button
+            android:id="@+id/bcolor3"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:background="#1C202A"
+            android:onClick="onPickNumberButton" />
+
+        <TextView
+            android:id="@+id/number_txt4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="onPickNumberButton"
+            android:paddingBottom="10dp"
+            android:text="NUMBER 4"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn4"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/telefonobotton"
+            android:gravity="center"
+            android:onClick="onPickNumberButton" />
+
+        <TextView
+            android:id="@+id/number3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:text=""
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/bcolornone3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/oknumbert" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="#959fa8"
+        android:paddingBottom="10dp" >
+
+        <Button
+            android:id="@+id/bcolor4"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:background="#1C202A"
+            android:onClick="onPickNumberButton" />
+
+        <TextView
+            android:id="@+id/number_txt5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="onPickNumberButton"
+            android:paddingBottom="10dp"
+            android:text="NUMBER 5"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn5"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/telefonobotton"
+            android:gravity="center"
+            android:onClick="onPickNumberButton" />
+
+        <TextView
+            android:id="@+id/number4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:text=""
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/bcolornone4"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/oknumbert" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#405966"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/smslanguage"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0.3"
+            android:background="@drawable/textlanguage"
+            android:onClick="onClickLanguage" />
+
+        <Button
+            android:id="@+id/bcolorsms"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="0.05"
+            android:background="@drawable/buttonflageng"
+            android:onClick="onClickLanguage" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#303b4a"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/menubottom"
+            android:layout_width="106dp"
+            android:layout_height="44dp"
+            android:layout_alignParentLeft="false"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/menubottom"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+</LinearLayout>

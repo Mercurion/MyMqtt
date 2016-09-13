@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    tools:context="com.myclose.mymqtt.MainActivity" >
+    tools:context="com.myclose.mymqtt.MyCloseMenuActivity" >
 
     <LinearLayout
         android:id="@+id/main_container"
@@ -25,16 +25,16 @@
 
 
 
-            <Button
-                android:id="@+id/toggle"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="0dp"
-                android:background="@drawable/myclose1"
-                android:padding="10dp"
-                android:textOff=""
-                android:textOn=""
-                android:layout_weight="7" />
+        <Button
+            android:id="@+id/toggle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="0dp"
+            android:background="@drawable/myclose1"
+            android:padding="10dp"
+            android:textOff=""
+            android:textOn=""
+            android:layout_weight="7" />
 
         <Button
             android:id="@+id/search"
@@ -64,45 +64,45 @@
             android:background="@drawable/set"
             android:padding="10dp" />
 
-    <LinearLayout
-        android:id="@+id/botton"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="#000000"
-        android:orientation="vertical"
-        android:layout_weight="1.5">
-
         <LinearLayout
+            android:id="@+id/botton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="#303b4a"
-            android:orientation="horizontal"
-            android:weightSum="9" >
+            android:background="#000000"
+            android:orientation="vertical"
+            android:layout_weight="1.5">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#303b4a"
+                android:orientation="horizontal"
+                android:weightSum="9" >
 
-            <Button
-                android:id="@+id/alert_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:background="@drawable/alertbotton"
-                android:onClick="AppAlert" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3" />
 
-            <Button
-                android:id="@+id/quitbotton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:background="@drawable/quitbotton"
-                android:onClick="AppExit" />
+                <Button
+                    android:id="@+id/alert_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:background="@drawable/alertbotton"
+                    android:onClick="AppAlert" />
+
+                <Button
+                    android:id="@+id/quitbotton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:background="@drawable/quitbotton"
+                    android:onClick="AppExit" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
     <RelativeLayout
         android:id="@+id/frameAlert"
         android:layout_width="match_parent"
@@ -120,14 +120,14 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/border"
                 android:orientation="vertical"
-               >
+                >
 
                 <Button
                     android:id="@+id/alert_button1"
                     android:layout_width="125dp"
                     android:layout_height="45dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/alertbotton" 
+                    android:background="@drawable/alertbotton"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     />

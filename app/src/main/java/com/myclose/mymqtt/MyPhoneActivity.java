@@ -26,12 +26,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import net.myclose.myclose.R;
-
+/**<pre>
+ * Questa classe gestisce la view riguardante i numeri di telefono associati al tracker.
+ * @author Giacomo
+ * @author Wilson
+ * @see Sender
+ * @see MyCloseMenuActivity
+ * </pre>
+ */
 public class MyPhoneActivity extends Activity {
 
 	private static final int PICK_CONTACT = 200;
+
+	private Sender smsSender;
 
 	MySqlClose myDbPhone;
 	private String DEV_MASTER_ID;
@@ -67,7 +74,7 @@ public class MyPhoneActivity extends Activity {
 	Button bcolornonet4;
 	Button bcolorsms;
 	private BroadcastReceiver smsReciverPhone;
-//	private static final int LanguageSms = 0;
+	//	private static final int LanguageSms = 0;
 //	private static final int Bottonetelefono0 = 0;
 	protected static final String MyPREFERENCES = "MyPrefs";
 	SharedPreferences sharedpreferences;
@@ -89,7 +96,6 @@ public class MyPhoneActivity extends Activity {
 	private String valoreparametro15flag;
 	private String telefonoPassato;
 
-//	private int intBottonetelefono;
 
 	private Uri contactData;
 
@@ -122,20 +128,19 @@ public class MyPhoneActivity extends Activity {
 		sharedpreferences = getSharedPreferences(MyPREFERENCES,
 				Context.MODE_PRIVATE);
 		intcolorSms = sharedpreferences.getInt("LanguageSms", 0);
-//		intBottonetelefono = sharedpreferences.getInt("Bottonetelefono0", 0);
 		// changeBottonetelefono(buttonx,btn,number);
 		changeFlag(intcolorSms);
 
-		
+
 		valoreparametro1flag = sharedpreferences.getInt("nomeparametro1", 1);
 		valoreparametro2flag = sharedpreferences.getInt("nomeparametro2", 1);
 //		valoreparametro3flag = sharedpreferences.getString("nomeparametro3",
 //				null);
-		
+
 		String telefonopassatosenzazero = "+"
 				+ telefonoPassato.substring(2);
 		valoreparametro3flag = telefonopassatosenzazero;
-		
+
 		valoreparametro4flag = sharedpreferences.getInt("nomeparametro4", 0);
 		valoreparametro5flag = sharedpreferences.getInt("nomeparametro5", 0);
 		valoreparametro6flag = sharedpreferences.getString("nomeparametro6",
@@ -175,6 +180,10 @@ public class MyPhoneActivity extends Activity {
 			}
 		};
 
+		smsSender = new Sender();
+		smsSender.setMasterPhone(DEV_NUMBER);
+		smsSender.setMasterID(DEV_MASTER_ID);
+
 	}
 
 	public void readMessage(String value, Context context) {
@@ -190,8 +199,6 @@ public class MyPhoneActivity extends Activity {
 				|| value.equals("Atencion!ApagadoMaste")
 				|| value.equals("Attentie!UitzettenMas")) {
 			MyPhoneActivity.this.finish();
-			// changeStatoTasto0(0);
-
 		}
 
 		// else if (value.equals("Attenzione!Allarmebas")
@@ -247,17 +254,7 @@ public class MyPhoneActivity extends Activity {
 		else if (value.equals(DEV_MASTER_ID + "00CONFIRMED")) {
 
 			MyPhoneActivity.this.finish();
-			// changeStatoTasto0(0);
-
 		}
-
-
-
-
-
-//		else {
-//			Toast.makeText(context, value, Toast.LENGTH_SHORT).show();
-//		}
 	}
 
 //	private String loadTelefonoUser() {
@@ -278,29 +275,23 @@ public class MyPhoneActivity extends Activity {
 //
 //	}
 
+	/**
+	 * Questo metodo viene chiamato per caricare i dati dal DB. I dati necessari sono Id del master e numero di telefono.
+	 */
 	private void loadFromdb() {
-
 		Utente u = myDbPhone.getUtente();
 //		String sim = u.getIdSim();
 		telefonoPassato = u.getIdTel();
-
 		DEV_MASTER_ID = u.getIdMaster();
-		;
 		DEV_NUMBER = u.getIdTelMaster();
-		
-		
-//		 Toast.makeText(getApplicationContext(),
-//		 DEV_MASTER_ID + " " + DEV_NUMBER + " " + sim + " " + telefonoPassato,
-//		
-//		 Toast.LENGTH_LONG).show();
 	}
-	
-	
+
+
 
 	private void saveTelefonoUser(String numeroTel) {
 
 		Utente u = myDbPhone.getUtente();
-	    numeroTel=numeroTel.substring(1);
+		numeroTel=numeroTel.substring(1);
 		numeroTel="00"+numeroTel;
 		u.setIdTel(numeroTel);
 		myDbPhone.upDateUtente(u);
@@ -308,8 +299,8 @@ public class MyPhoneActivity extends Activity {
 //		String idTel = u.getIdTel();
 //
 //		DEV_MASTER_ID = u.getIdMaster();
-		
-		
+
+
 		// Toast.makeText(getApplicationContext(),
 		// DEV_MASTER_ID + " " + DEV_NUMBER + " " + sim + " " + idTel,
 		//
@@ -322,100 +313,100 @@ public class MyPhoneActivity extends Activity {
 
 		switch (numero) {
 
-		case 0:
-			Editor editor = sharedpreferences.edit();
-			editor.putInt("nomeparametro1", 1);
-			editor.commit();
+			case 0:
+				Editor editor = sharedpreferences.edit();
+				editor.putInt("nomeparametro1", 1);
+				editor.apply();
 
-			Editor editor1 = sharedpreferences.edit();
-			editor1.putInt("nomeparametro2", 1);
-			editor1.commit();
+				Editor editor1 = sharedpreferences.edit();
+				editor1.putInt("nomeparametro2", 1);
+				editor1.apply();
 
-			
-			
+
+
 //			Editor editor2 = sharedpreferences.edit();
 //			editor2.putString("nomeparametro3", numerotel);
 //			editor2.commit();
-			
-			saveTelefonoUser(numerotel);
-			
-			loadFromdb();
-			funzioneriga1(1, 1, numerotel);
-			Toast.makeText(getBaseContext(), "Phone Number 1", Toast.LENGTH_SHORT)
-					.show();
-			break;
 
-		case 1:
+				saveTelefonoUser(numerotel);
 
-			Editor editor3 = sharedpreferences.edit();
-			editor3.putInt("nomeparametro4", 1);
-			editor3.commit();
+				loadFromdb();
+				funzioneriga1(1, 1, numerotel);
+				Toast.makeText(getBaseContext(), "Phone Number 1", Toast.LENGTH_SHORT)
+						.show();
+				break;
 
-			Editor editor4 = sharedpreferences.edit();
-			editor4.putInt("nomeparametro5", 1);
-			editor4.commit();
+			case 1:
 
-			Editor editor5 = sharedpreferences.edit();
-			editor5.putString("nomeparametro6", numerotel);
-			editor5.commit();
-			funzioneriga2(1, 1, numerotel);
-			Toast.makeText(getBaseContext(), "Phone Number 2", Toast.LENGTH_SHORT)
-					.show();
-			break;
+				Editor editor3 = sharedpreferences.edit();
+				editor3.putInt("nomeparametro4", 1);
+				editor3.apply();
 
-		case 2:
+				Editor editor4 = sharedpreferences.edit();
+				editor4.putInt("nomeparametro5", 1);
+				editor4.apply();
 
-			Editor editor6 = sharedpreferences.edit();
-			editor6.putInt("nomeparametro7", 1);
-			editor6.commit();
+				Editor editor5 = sharedpreferences.edit();
+				editor5.putString("nomeparametro6", numerotel);
+				editor5.apply();
+				funzioneriga2(1, 1, numerotel);
+				Toast.makeText(getBaseContext(), "Phone Number 2", Toast.LENGTH_SHORT)
+						.show();
+				break;
 
-			Editor editor7 = sharedpreferences.edit();
-			editor7.putInt("nomeparametro8", 1);
-			editor7.commit();
+			case 2:
 
-			Editor editor8 = sharedpreferences.edit();
-			editor8.putString("nomeparametro9", numerotel);
-			editor8.commit();
-			funzioneriga3(1, 1, numerotel);
-			Toast.makeText(getBaseContext(), "Phone Number 3", Toast.LENGTH_SHORT)
-					.show();
-			break;
+				Editor editor6 = sharedpreferences.edit();
+				editor6.putInt("nomeparametro7", 1);
+				editor6.apply();
 
-		case 3:
+				Editor editor7 = sharedpreferences.edit();
+				editor7.putInt("nomeparametro8", 1);
+				editor7.apply();
 
-			Editor editor9 = sharedpreferences.edit();
-			editor9.putInt("nomeparametro10", 1);
-			editor9.commit();
+				Editor editor8 = sharedpreferences.edit();
+				editor8.putString("nomeparametro9", numerotel);
+				editor8.apply();
+				funzioneriga3(1, 1, numerotel);
+				Toast.makeText(getBaseContext(), "Phone Number 3", Toast.LENGTH_SHORT)
+						.show();
+				break;
 
-			Editor editor10 = sharedpreferences.edit();
-			editor10.putInt("nomeparametro11", 1);
-			editor10.commit();
+			case 3:
 
-			Editor editor11 = sharedpreferences.edit();
-			editor11.putString("nomeparametro12", numerotel);
-			editor11.commit();
-			funzioneriga4(1, 1, numerotel);
-			Toast.makeText(getBaseContext(), "Phone Number 4", Toast.LENGTH_SHORT)
-					.show();
-			break;
+				Editor editor9 = sharedpreferences.edit();
+				editor9.putInt("nomeparametro10", 1);
+				editor9.apply();
 
-		case 4:
+				Editor editor10 = sharedpreferences.edit();
+				editor10.putInt("nomeparametro11", 1);
+				editor10.apply();
 
-			Editor editor12 = sharedpreferences.edit();
-			editor12.putInt("nomeparametro13", 1);
-			editor12.commit();
+				Editor editor11 = sharedpreferences.edit();
+				editor11.putString("nomeparametro12", numerotel);
+				editor11.apply();
+				funzioneriga4(1, 1, numerotel);
+				Toast.makeText(getBaseContext(), "Phone Number 4", Toast.LENGTH_SHORT)
+						.show();
+				break;
 
-			Editor editor13 = sharedpreferences.edit();
-			editor13.putInt("nomeparametro14", 1);
-			editor13.commit();
+			case 4:
 
-			Editor editor14 = sharedpreferences.edit();
-			editor14.putString("nomeparametro15", numerotel);
-			editor14.commit();
-			funzioneriga5(1, 1, numerotel);
-			Toast.makeText(getBaseContext(), "Phone Number 5", Toast.LENGTH_SHORT)
-					.show();
-			break;
+				Editor editor12 = sharedpreferences.edit();
+				editor12.putInt("nomeparametro13", 1);
+				editor12.apply();
+
+				Editor editor13 = sharedpreferences.edit();
+				editor13.putInt("nomeparametro14", 1);
+				editor13.apply();
+
+				Editor editor14 = sharedpreferences.edit();
+				editor14.putString("nomeparametro15", numerotel);
+				editor14.apply();
+				funzioneriga5(1, 1, numerotel);
+				Toast.makeText(getBaseContext(), "Phone Number 5", Toast.LENGTH_SHORT)
+						.show();
+				break;
 		}
 
 	}
@@ -425,97 +416,97 @@ public class MyPhoneActivity extends Activity {
 
 		switch (numero) {
 
-		case 0:
-			Editor editor = sharedpreferences.edit();
-			editor.putInt("nomeparametro1", 0);
-			editor.commit();
+			case 0:
+				Editor editor = sharedpreferences.edit();
+				editor.putInt("nomeparametro1", 0);
+				editor.commit();
 
-			Editor editor1 = sharedpreferences.edit();
-			editor1.putInt("nomeparametro2", 0);
-			editor1.commit();
+				Editor editor1 = sharedpreferences.edit();
+				editor1.putInt("nomeparametro2", 0);
+				editor1.commit();
 
 //			Editor editor2 = sharedpreferences.edit();
 //			editor2.putString("nomeparametro3", numerotel);
 //			editor2.commit();
-			
-			saveTelefonoUser(numerotel);
-			loadFromdb();
-			
-			Toast.makeText(getBaseContext(), "Phone Number 1", Toast.LENGTH_SHORT)
-					.show();
-			break;
 
-		case 1:
+				saveTelefonoUser(numerotel);
+				loadFromdb();
 
-			Editor editor3 = sharedpreferences.edit();
-			editor3.putInt("nomeparametro4", 0);
-			editor3.commit();
+				Toast.makeText(getBaseContext(), "Phone Number 1", Toast.LENGTH_SHORT)
+						.show();
+				break;
 
-			Editor editor4 = sharedpreferences.edit();
-			editor4.putInt("nomeparametro5", 0);
-			editor4.commit();
+			case 1:
 
-			Editor editor5 = sharedpreferences.edit();
-			editor5.putString("nomeparametro6", numerotel);
-			editor5.commit();
+				Editor editor3 = sharedpreferences.edit();
+				editor3.putInt("nomeparametro4", 0);
+				editor3.commit();
 
-			Toast.makeText(getBaseContext(), "Phone Number 2", Toast.LENGTH_SHORT)
-					.show();
-			break;
+				Editor editor4 = sharedpreferences.edit();
+				editor4.putInt("nomeparametro5", 0);
+				editor4.commit();
 
-		case 2:
+				Editor editor5 = sharedpreferences.edit();
+				editor5.putString("nomeparametro6", numerotel);
+				editor5.commit();
 
-			Editor editor6 = sharedpreferences.edit();
-			editor6.putInt("nomeparametro7", 0);
-			editor6.commit();
+				Toast.makeText(getBaseContext(), "Phone Number 2", Toast.LENGTH_SHORT)
+						.show();
+				break;
 
-			Editor editor7 = sharedpreferences.edit();
-			editor7.putInt("nomeparametro8", 0);
-			editor7.commit();
+			case 2:
 
-			Editor editor8 = sharedpreferences.edit();
-			editor8.putString("nomeparametro9", numerotel);
-			editor8.commit();
+				Editor editor6 = sharedpreferences.edit();
+				editor6.putInt("nomeparametro7", 0);
+				editor6.commit();
 
-			Toast.makeText(getBaseContext(), "Phone Number 3", Toast.LENGTH_SHORT)
-					.show();
-			break;
+				Editor editor7 = sharedpreferences.edit();
+				editor7.putInt("nomeparametro8", 0);
+				editor7.commit();
 
-		case 3:
+				Editor editor8 = sharedpreferences.edit();
+				editor8.putString("nomeparametro9", numerotel);
+				editor8.commit();
 
-			Editor editor9 = sharedpreferences.edit();
-			editor9.putInt("nomeparametro10", 0);
-			editor9.commit();
+				Toast.makeText(getBaseContext(), "Phone Number 3", Toast.LENGTH_SHORT)
+						.show();
+				break;
 
-			Editor editor10 = sharedpreferences.edit();
-			editor10.putInt("nomeparametro11", 0);
-			editor10.commit();
+			case 3:
 
-			Editor editor11 = sharedpreferences.edit();
-			editor11.putString("nomeparametro12", numerotel);
-			editor11.commit();
+				Editor editor9 = sharedpreferences.edit();
+				editor9.putInt("nomeparametro10", 0);
+				editor9.commit();
 
-			Toast.makeText(getBaseContext(), "Phone Number 4", Toast.LENGTH_SHORT)
-					.show();
-			break;
+				Editor editor10 = sharedpreferences.edit();
+				editor10.putInt("nomeparametro11", 0);
+				editor10.commit();
 
-		case 4:
+				Editor editor11 = sharedpreferences.edit();
+				editor11.putString("nomeparametro12", numerotel);
+				editor11.commit();
 
-			Editor editor12 = sharedpreferences.edit();
-			editor12.putInt("nomeparametro13", 0);
-			editor12.commit();
+				Toast.makeText(getBaseContext(), "Phone Number 4", Toast.LENGTH_SHORT)
+						.show();
+				break;
 
-			Editor editor13 = sharedpreferences.edit();
-			editor13.putInt("nomeparametro14", 0);
-			editor13.commit();
+			case 4:
 
-			Editor editor14 = sharedpreferences.edit();
-			editor14.putString("nomeparametro15", numerotel);
-			editor14.commit();
+				Editor editor12 = sharedpreferences.edit();
+				editor12.putInt("nomeparametro13", 0);
+				editor12.commit();
 
-			Toast.makeText(getBaseContext(), "Phone Number 5", Toast.LENGTH_SHORT)
-					.show();
-			break;
+				Editor editor13 = sharedpreferences.edit();
+				editor13.putInt("nomeparametro14", 0);
+				editor13.commit();
+
+				Editor editor14 = sharedpreferences.edit();
+				editor14.putString("nomeparametro15", numerotel);
+				editor14.commit();
+
+				Toast.makeText(getBaseContext(), "Phone Number 5", Toast.LENGTH_SHORT)
+						.show();
+				break;
 		}
 
 	}
@@ -583,6 +574,8 @@ public class MyPhoneActivity extends Activity {
 //
 //	}
 
+
+	@Deprecated
 	private void sendSMS(String phoneNumber, String message) {
 		String SENT = "SMS_SENT";
 		String DELIVERED = "SMS_DELIVERED";
@@ -597,26 +590,26 @@ public class MyPhoneActivity extends Activity {
 			@Override
 			public void onReceive(Context arg0, Intent arg1) {
 				switch (getResultCode()) {
-				case Activity.RESULT_OK:
-					Toast.makeText(getBaseContext(), "SMS Sent!",
-							Toast.LENGTH_SHORT).show();
-					break;
-				case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-					Toast.makeText(getBaseContext(), "Generic failure",
-							Toast.LENGTH_SHORT).show();
-					break;
-				case SmsManager.RESULT_ERROR_NO_SERVICE:
-					Toast.makeText(getBaseContext(), "No service",
-							Toast.LENGTH_SHORT).show();
-					break;
-				case SmsManager.RESULT_ERROR_NULL_PDU:
-					Toast.makeText(getBaseContext(), "Null PDU",
-							Toast.LENGTH_SHORT).show();
-					break;
-				case SmsManager.RESULT_ERROR_RADIO_OFF:
-					Toast.makeText(getBaseContext(), "Radio off",
-							Toast.LENGTH_SHORT).show();
-					break;
+					case Activity.RESULT_OK:
+						Toast.makeText(getBaseContext(), "SMS Sent!",
+								Toast.LENGTH_SHORT).show();
+						break;
+					case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
+						Toast.makeText(getBaseContext(), "Generic failure",
+								Toast.LENGTH_SHORT).show();
+						break;
+					case SmsManager.RESULT_ERROR_NO_SERVICE:
+						Toast.makeText(getBaseContext(), "No service",
+								Toast.LENGTH_SHORT).show();
+						break;
+					case SmsManager.RESULT_ERROR_NULL_PDU:
+						Toast.makeText(getBaseContext(), "Null PDU",
+								Toast.LENGTH_SHORT).show();
+						break;
+					case SmsManager.RESULT_ERROR_RADIO_OFF:
+						Toast.makeText(getBaseContext(), "Radio off",
+								Toast.LENGTH_SHORT).show();
+						break;
 				}
 			}
 		}, new IntentFilter(SENT));
@@ -626,14 +619,14 @@ public class MyPhoneActivity extends Activity {
 			@Override
 			public void onReceive(Context arg0, Intent arg1) {
 				switch (getResultCode()) {
-				case Activity.RESULT_OK:
-					Toast.makeText(getBaseContext(), "SMS delivered",
-							Toast.LENGTH_SHORT).show();
-					break;
-				case Activity.RESULT_CANCELED:
-					Toast.makeText(getBaseContext(), "SMS not delivered",
-							Toast.LENGTH_SHORT).show();
-					break;
+					case Activity.RESULT_OK:
+						Toast.makeText(getBaseContext(), "SMS delivered",
+								Toast.LENGTH_SHORT).show();
+						break;
+					case Activity.RESULT_CANCELED:
+						Toast.makeText(getBaseContext(), "SMS not delivered",
+								Toast.LENGTH_SHORT).show();
+						break;
 				}
 			}
 		}, new IntentFilter(DELIVERED));
@@ -643,10 +636,7 @@ public class MyPhoneActivity extends Activity {
 				deliveredPI);
 	}
 
-	public void addListenerGomenu() {
-
-//		final Context context = this;
-
+	private void addListenerGomenu() {
 		gomenu = (Button) findViewById(R.id.menubottom);
 
 		gomenu.setOnClickListener(new OnClickListener() {
@@ -664,79 +654,73 @@ public class MyPhoneActivity extends Activity {
 
 	public void onPickNumberButton(View v) {
 		switch (v.getId()) {
-		case R.id.btn1:
-		case R.id.bcolor:
-		case R.id.number_txt:
-			
-			if (valoreparametro1flag == 0) {
-				openPickNumberButtonClicktCancel(phoneNumber, mButton,
-						bcolornonet, 1);
-			} else {
-				openPickNumberButtonClickt(phoneNumber, mButton, bcolornonet, 1);
-			}
-			break;
-		case R.id.btn2:
-		case R.id.bcolor1:
-		case R.id.number_txt1:
-			valoreparametro4flag = sharedpreferences
-					.getInt("nomeparametro4", 0);
-			if (valoreparametro4flag == 1) {
-				openPickNumberButtonClicktCancel(phoneNumber1, mButton1,
-						bcolornonet1, 2);
-			} else {
-				openPickNumberButtonClickt(phoneNumber1, mButton1,
-						bcolornonet1, 2);
-			}
-			break;
-		case R.id.btn3:
-		case R.id.bcolor2:
-		case R.id.number_txt2:
-			valoreparametro7flag = sharedpreferences
-					.getInt("nomeparametro7", 0);
-			if (valoreparametro7flag == 1) {
-				openPickNumberButtonClicktCancel(phoneNumber2, mButton2,
-						bcolornonet2, 3);
-			} else {
-				openPickNumberButtonClickt(phoneNumber2, mButton2,
-						bcolornonet2, 3);
-			}
-			break;
-		case R.id.btn4:
-		case R.id.bcolor3:
-		case R.id.number_txt4:
-			valoreparametro10flag = sharedpreferences.getInt("nomeparametro10",
-					0);
-			if (valoreparametro10flag == 1) {
-				openPickNumberButtonClicktCancel(phoneNumber3, mButton3,
-						bcolornonet3, 4);
-			} else {
-				openPickNumberButtonClickt(phoneNumber3, mButton3,
-						bcolornonet3, 4);
-			}
-			break;
-		case R.id.btn5:
-		case R.id.bcolor4:
-		case R.id.number_txt5:
-			valoreparametro13flag = sharedpreferences.getInt("nomeparametro13",
-					0);
-			if (valoreparametro13flag == 1) {
-				openPickNumberButtonClicktCancel(phoneNumber4, mButton4,
-						bcolornonet4, 5);
-			} else {
-				openPickNumberButtonClickt(phoneNumber4, mButton4,
-						bcolornonet4, 5);
-			}
-			break;
+			case R.id.btn1:
+			case R.id.bcolor:
+			case R.id.number_txt:
+
+				if (valoreparametro1flag == 0) {
+					openPickNumberButtonClicktCancel(phoneNumber, mButton,
+							bcolornonet, 1);
+				} else {
+					openPickNumberButtonClickt(phoneNumber, mButton, bcolornonet, 1);
+				}
+				break;
+			case R.id.btn2:
+			case R.id.bcolor1:
+			case R.id.number_txt1:
+				valoreparametro4flag = sharedpreferences
+						.getInt("nomeparametro4", 0);
+				if (valoreparametro4flag == 1) {
+					openPickNumberButtonClicktCancel(phoneNumber1, mButton1,
+							bcolornonet1, 2);
+				} else {
+					openPickNumberButtonClickt(phoneNumber1, mButton1,
+							bcolornonet1, 2);
+				}
+				break;
+			case R.id.btn3:
+			case R.id.bcolor2:
+			case R.id.number_txt2:
+				valoreparametro7flag = sharedpreferences
+						.getInt("nomeparametro7", 0);
+				if (valoreparametro7flag == 1) {
+					openPickNumberButtonClicktCancel(phoneNumber2, mButton2,
+							bcolornonet2, 3);
+				} else {
+					openPickNumberButtonClickt(phoneNumber2, mButton2,
+							bcolornonet2, 3);
+				}
+				break;
+			case R.id.btn4:
+			case R.id.bcolor3:
+			case R.id.number_txt4:
+				valoreparametro10flag = sharedpreferences.getInt("nomeparametro10",
+						0);
+				if (valoreparametro10flag == 1) {
+					openPickNumberButtonClicktCancel(phoneNumber3, mButton3,
+							bcolornonet3, 4);
+				} else {
+					openPickNumberButtonClickt(phoneNumber3, mButton3,
+							bcolornonet3, 4);
+				}
+				break;
+			case R.id.btn5:
+			case R.id.bcolor4:
+			case R.id.number_txt5:
+				valoreparametro13flag = sharedpreferences.getInt("nomeparametro13",
+						0);
+				if (valoreparametro13flag == 1) {
+					openPickNumberButtonClicktCancel(phoneNumber4, mButton4,
+							bcolornonet4, 5);
+				} else {
+					openPickNumberButtonClickt(phoneNumber4, mButton4,
+							bcolornonet4, 5);
+				}
+				break;
 		}
 
 	}
 
-	// eliminate
-	// public void AppExit(View v) {
-	//
-	// openAlertExit(v);
-	//
-	// }
 
 	private void openPickNumberButtonClicktCancel(final TextView phoneNumberty,
 												  final Button buttonx, final Button btn, final int numberButton) {
@@ -776,64 +760,64 @@ public class MyPhoneActivity extends Activity {
 						} else {
 
 							switch (Snumber) {
-							case 0:
-								// if(Snumber==0){ //cancellare
-								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-										MyPhoneActivity.this);
-								// dialog.cancel();
+								case 0:
+									// if(Snumber==0){ //cancellare
+									AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+											MyPhoneActivity.this);
+									// dialog.cancel();
 
-								alertDialogBuilder
-										.setTitle("Insert a Phone Number");
-								alertDialogBuilder
-										.setMessage("00 + CountryCode + PhoneNumber"
-												+ "\n" + "(Ex:00393401234567)");
+									alertDialogBuilder
+											.setTitle("Insert a Phone Number");
+									alertDialogBuilder
+											.setMessage("00 + CountryCode + PhoneNumber"
+													+ "\n" + "(Ex:00393401234567)");
 
-								final EditText input_number = new EditText(
-										getApplicationContext());
-								input_number
-										.setInputType(InputType.TYPE_CLASS_NUMBER);
-								input_number
-										.setHint("Click here to insert your Phone");
-								input_number.setTextColor(Color
-										.parseColor("#000000"));
-								input_number.setBackgroundColor(Color.WHITE);
-								alertDialogBuilder.setView(input_number);
+									final EditText input_number = new EditText(
+											getApplicationContext());
+									input_number
+											.setInputType(InputType.TYPE_CLASS_NUMBER);
+									input_number
+											.setHint("Click here to insert your Phone");
+									input_number.setTextColor(Color
+											.parseColor("#000000"));
+									input_number.setBackgroundColor(Color.WHITE);
+									alertDialogBuilder.setView(input_number);
 
-								// set positive button: Yes message
-								alertDialogBuilder.setPositiveButton("Add",
-										new DialogInterface.OnClickListener() {
+									// set positive button: Yes message
+									alertDialogBuilder.setPositiveButton("Add",
+											new DialogInterface.OnClickListener() {
 
-											public void onClick(
-													DialogInterface dialog,
-													int id) {
+												public void onClick(
+														DialogInterface dialog,
+														int id) {
 
-												// 1 : check if number is right
-												// save to database the added
-												// number
-												// set number to number textView
+													// 1 : check if number is right
+													// save to database the added
+													// number
+													// set number to number textView
 
-												String number1 = input_number
-														.getText().toString()
-														.trim();
+													String number1 = input_number
+															.getText().toString()
+															.trim();
 
-												if (!number1.isEmpty()) {
-													String number = "+"
-															+ number1
-																	.substring(2);
-													phoneNumberty
-															.setText(number);
+													if (!number1.isEmpty()) {
+														String number = "+"
+																+ number1
+																.substring(2);
+														phoneNumberty
+																.setText(number);
 
-													buttonx.setBackgroundColor(Color
-															.parseColor("#eb5b25"));
-													btn.setBackgroundResource(R.drawable.oknumber);
-													Funzione(numberButton,
-															number);
-													//
-													// changeBottonetelefono(buttonx,btn,number);
+														buttonx.setBackgroundColor(Color
+																.parseColor("#eb5b25"));
+														btn.setBackgroundResource(R.drawable.oknumber);
+														Funzione(numberButton,
+																number);
+														//
+														// changeBottonetelefono(buttonx,btn,number);
 
-													try {
-
-														sendSMS(DEV_NUMBER,
+														try {
+															smsSender.NumeroChiamareMessage(numberButton,number);
+														/*sendSMS(DEV_NUMBER,
 																DEV_MASTER_ID
 																		+ " "
 																		+ "20"
@@ -843,108 +827,102 @@ public class MyPhoneActivity extends Activity {
 																		+ number
 																		+ " "
 																		+ "PHONE NUMBER");
+																		*/
+															// smsManager.sendTextMessage("+393478401746",
+															// "+393478401746",
+															// "SHUTDOWN", null,
+															// null);
+															// this.finish();
+															Toast.makeText(
+																	getApplicationContext(),
+																	"Command SMS Sent!",
+																	Toast.LENGTH_LONG)
+																	.show();
 
-														// smsManager.sendTextMessage("+393478401746",
-														// "+393478401746",
-														// "SHUTDOWN", null,
-														// null);
-														// this.finish();
+														} catch (Exception e) {
+															// TODO: handle
+															// exception
+															e.printStackTrace();
+														}
+													} else {
 														Toast.makeText(
 																getApplicationContext(),
-																"Command SMS Sent!",
+																"No Phone Number selected",
 																Toast.LENGTH_LONG)
 																.show();
-
-													} catch (Exception e) {
-														// TODO: handle
-														// exception
-														e.printStackTrace();
+														dialog.cancel();
 													}
-												} else {
-													Toast.makeText(
-															getApplicationContext(),
-															"No Phone Number selected",
-															Toast.LENGTH_LONG)
-															.show();
-													dialog.cancel();
 												}
-											}
 
-										});
+											});
 
-								// set negative button: No message
-								alertDialogBuilder.setNegativeButton("Cancel",
-										new DialogInterface.OnClickListener() {
-											public void onClick(
-													DialogInterface dialog,
-													int id) {
-												// cancel the alert box and put
-												// a
-												// Toast to the user
+									// set negative button: No message
+									alertDialogBuilder.setNegativeButton("Cancel",
+											new DialogInterface.OnClickListener() {
+												public void onClick(
+														DialogInterface dialog,
+														int id) {
+													// cancel the alert box and put
+													// a
+													// Toast to the user
 
-												dialog.cancel();
+													dialog.cancel();
 
-											}
-										});
+												}
+											});
 
-								AlertDialog alertDialog = alertDialogBuilder
-										.create();
-								// show alert
-								alertDialog.show();
-								dialog.cancel();
-								// TODO Auto-generated method stub
+									AlertDialog alertDialog = alertDialogBuilder
+											.create();
+									// show alert
+									alertDialog.show();
+									dialog.cancel();
+									// TODO Auto-generated method stub
 
-								// } //cancellare
-								break;
-							case 1:
-								// else{ //cancellare
+									// } //cancellare
+									break;
+								case 1:
+									// else{ //cancellare
 
-								numeroBottone = numberButton;
-								et = phoneNumberty;
-								bcolornonetadd = buttonx;
-								mButtonadd = btn;
-								Intent intent = new Intent(
-										Intent.ACTION_PICK,
-										ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-								intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
-								startActivityForResult(intent, PICK_CONTACT);
+									numeroBottone = numberButton;
+									et = phoneNumberty;
+									bcolornonetadd = buttonx;
+									mButtonadd = btn;
+									Intent intent = new Intent(
+											Intent.ACTION_PICK,
+											ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+									intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
+									startActivityForResult(intent, PICK_CONTACT);
 
-								// } //cancellare
-								break;
+									// } //cancellare
+									break;
 
-							case 2:
-								String number = "";
-								phoneNumberty.setText(number);
-								buttonx.setBackgroundColor(Color
-										.parseColor("#1C202A"));
-								btn.setBackgroundResource(R.drawable.oknumbert);
-								FunzioneReset(numberButton, number);
-								//
-								// changeBottonetelefono(buttonx,btn,number);
+								case 2:
+									String number = "";
+									phoneNumberty.setText(number);
+									buttonx.setBackgroundColor(Color
+											.parseColor("#1C202A"));
+									btn.setBackgroundResource(R.drawable.oknumbert);
+									FunzioneReset(numberButton, number);
+									//
+									// changeBottonetelefono(buttonx,btn,number);
 
-								try {
-
-									sendSMS(DEV_NUMBER, DEV_MASTER_ID + " "
+									try {
+										smsSender.NumeroChiamareMessage(numberButton,number);
+									/*sendSMS(DEV_NUMBER, DEV_MASTER_ID + " "
 											+ "20" + " " + numberButton + " "
 											+ number + " " + "PHONE NUMBER");
+											*/
 
-									// smsManager.sendTextMessage("+393478401746",
-									// "+393478401746", "SHUTDOWN", null, null);
-									// this.finish();
-									Toast.makeText(getApplicationContext(),
-											"Command SMS Sent!",
-											Toast.LENGTH_LONG).show();
 
-								} catch (Exception e) {
-									// TODO: handle exception
-									e.printStackTrace();
-								}
-								// modificare testo.
+										Toast.makeText(getApplicationContext(),
+												"Command SMS Sent!",
+												Toast.LENGTH_LONG).show();
 
-								// Toast.makeText(getApplicationContext(),
-								// "Cancella", Toast.LENGTH_LONG).show();
-								dialog.cancel();
-								break;
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+									dialog.cancel();
+									break;
 							}
 						}
 					}
@@ -1048,7 +1026,7 @@ public class MyPhoneActivity extends Activity {
 												if (!number1.isEmpty()) {
 													String number = "+"
 															+ number1
-																	.substring(2);
+															.substring(2);
 													phoneNumberty
 															.setText(number);
 
@@ -1061,8 +1039,8 @@ public class MyPhoneActivity extends Activity {
 													// changeBottonetelefono(buttonx,btn,number);
 
 													try {
-
-														sendSMS(DEV_NUMBER,
+														smsSender.NumeroChiamareMessage(numberButton,number);
+														/*sendSMS(DEV_NUMBER,
 																DEV_MASTER_ID
 																		+ " "
 																		+ "20"
@@ -1072,12 +1050,8 @@ public class MyPhoneActivity extends Activity {
 																		+ number
 																		+ " "
 																		+ "PHONE NUMBER");
+																		*/
 
-														// smsManager.sendTextMessage("+393478401746",
-														// "+393478401746",
-														// "SHUTDOWN", null,
-														// null);
-														// this.finish();
 														Toast.makeText(
 																getApplicationContext(),
 																"Command SMS Sent!",
@@ -1173,7 +1147,7 @@ public class MyPhoneActivity extends Activity {
 	private void retrieveContacNumber() {
 
 		String cNumber = "";
-		
+
 		Cursor c = getContentResolver().query(contactData, null, null, null, null);
 		if (c.moveToFirst()) {
 
@@ -1195,49 +1169,45 @@ public class MyPhoneActivity extends Activity {
 				cNumber = cNumber.replaceAll("\\s+", "");
 
 			}
-			
+
 //			String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-			
-            if(cNumber.equals("")){
-            	
-            	
-            	Toast.makeText(getApplicationContext(),
-						"Phone Number is empty, select another Phone Number", Toast.LENGTH_LONG).show();
-            }
-            
-            else{
-			et.setText(cNumber);
 
-			bcolornonetadd.setBackgroundColor(Color.parseColor("#eb5b25"));
-			mButtonadd.setBackgroundResource(R.drawable.oknumber);
-			Funzione(numeroBottone, cNumber);
+			if(cNumber.equals("")){
 
-			Toast.makeText(getApplicationContext(), "number = " + cNumber,
-					Toast.LENGTH_SHORT).show();
-			try {
 
-				sendSMS(DEV_NUMBER, DEV_MASTER_ID + " " + "20" + " "
-						+ numeroBottone + " " + cNumber + " " + "PHONE NUMBER");
-
-				// smsManager.sendTextMessage("+393478401746",
-				// "+393478401746", "SHUTDOWN", null, null);
-				// this.finish();
 				Toast.makeText(getApplicationContext(),
-						"Command SMS Sent!", Toast.LENGTH_LONG).show();
-
-			} catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
+						"Phone Number is empty, select another Phone Number", Toast.LENGTH_LONG).show();
 			}
-		}
+
+			else{
+				et.setText(cNumber);
+
+				bcolornonetadd.setBackgroundColor(Color.parseColor("#eb5b25"));
+				mButtonadd.setBackgroundResource(R.drawable.oknumber);
+				Funzione(numeroBottone, cNumber);
+
+				Toast.makeText(getApplicationContext(), "number = " + cNumber,
+						Toast.LENGTH_SHORT).show();
+				try {
+
+					smsSender.NumeroChiamareMessage(numeroBottone,cNumber);
+				/*sendSMS(DEV_NUMBER, DEV_MASTER_ID + " " + "20" + " "
+						+ numeroBottone + " " + cNumber + " " + "PHONE NUMBER");
+						*/
+
+					Toast.makeText(getApplicationContext(),
+							"Command SMS Sent!", Toast.LENGTH_LONG).show();
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 	}
 
 	public void onClickLanguage(View v) {
-
 		openAlertLanguage(v);
-
 	}
 
 	private void openAlertLanguage(View view) {
@@ -1258,8 +1228,6 @@ public class MyPhoneActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 						selectedItem = (String) items[which];
 						Lnumber = which;
-						// TODO Auto-generated method stub
-
 					}
 				});
 
@@ -1277,24 +1245,19 @@ public class MyPhoneActivity extends Activity {
 											Toast.LENGTH_SHORT);
 							toast.show();
 						} else {
-
-							// Toast toast = Toast
-							// .makeText(getApplicationContext(), "Selected: "
-							// + selectedItem + Lnumber, Toast.LENGTH_SHORT);
-							// toast.show();
 							changeFlag(Lnumber);
 
 							try {
-
+								smsSender.LinguaMessage(Lnumber);
+								/*
 								sendSMS(DEV_NUMBER, DEV_MASTER_ID + " " + "30"
 										+ " " + Lnumber + " " + "SMS LANGUAGE");
-								// this.finish();
+										*/
 								Toast.makeText(getApplicationContext(),
 										"Command SMS Sent!",
 										Toast.LENGTH_LONG).show();
 
 							} catch (Exception e) {
-								// TODO: handle exception
 								e.printStackTrace();
 							}
 
@@ -1307,54 +1270,52 @@ public class MyPhoneActivity extends Activity {
 					public void onClick(DialogInterface dialog, int id) {
 						// cancel the alert box and put a Toast to the user
 						dialog.cancel();
-
 					}
 				});
 
 		AlertDialog alertDialog = alertDialogBuilder.create();
-		// show alert
 		alertDialog.show();
 	}
 
 	private void saveValue(int position) {
 		Editor editor = sharedpreferences.edit();
 		editor.putInt("LanguageSms", position);
-		editor.commit();
+		editor.apply();
 	}
 
 	private void changeFlag(int position) {
 
 		switch (position) {
-		case 0:
-			bcolorsms.setBackgroundResource(R.drawable.buttonflageng);
-			saveValue(position);
+			case 0:
+				bcolorsms.setBackgroundResource(R.drawable.buttonflageng);
+				saveValue(position);
 
-			break;
-		case 1:
-			bcolorsms.setBackgroundResource(R.drawable.buttonflagita);
-			saveValue(position);
-			break;
-		case 2:
-			bcolorsms.setBackgroundResource(R.drawable.buttonflagfr);
-			saveValue(position);
-			break;
-		case 3:
-			bcolorsms.setBackgroundResource(R.drawable.buttonflagde);
-			saveValue(position);
-			break;
-		case 4:
-			bcolorsms.setBackgroundResource(R.drawable.buttonflages);
-			saveValue(position);
-			break;
-		case 5:
-			bcolorsms.setBackgroundResource(R.drawable.buttonflagdu);
-			saveValue(position);
-			break;
-		default:
-			bcolorsms.setBackgroundResource(R.drawable.buttonflageng);
-			Editor editor = sharedpreferences.edit();
-			editor.putInt("LanguageSms", 0);
-			editor.commit();
+				break;
+			case 1:
+				bcolorsms.setBackgroundResource(R.drawable.buttonflagita);
+				saveValue(position);
+				break;
+			case 2:
+				bcolorsms.setBackgroundResource(R.drawable.buttonflagfr);
+				saveValue(position);
+				break;
+			case 3:
+				bcolorsms.setBackgroundResource(R.drawable.buttonflagde);
+				saveValue(position);
+				break;
+			case 4:
+				bcolorsms.setBackgroundResource(R.drawable.buttonflages);
+				saveValue(position);
+				break;
+			case 5:
+				bcolorsms.setBackgroundResource(R.drawable.buttonflagdu);
+				saveValue(position);
+				break;
+			default:
+				bcolorsms.setBackgroundResource(R.drawable.buttonflageng);
+				Editor editor = sharedpreferences.edit();
+				editor.putInt("LanguageSms", 0);
+				editor.apply();
 
 		}
 
@@ -1380,7 +1341,6 @@ public class MyPhoneActivity extends Activity {
 //									"SMS Sent!", Toast.LENGTH_LONG).show();
 //
 //						} catch (Exception e) {
-//							// TODO: handle exception
 //							e.printStackTrace();
 //						}
 //
@@ -1401,11 +1361,6 @@ public class MyPhoneActivity extends Activity {
 //		alertDialog.show();
 //	}
 
-	// private void openAlertExit(View view) {
-	//
-	// MyPhoneActivity.this.finish();
-	//
-	// }
 
 	@Override
 	public void onStart() {

@@ -1,0 +1,17 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="0dp">
+    <item
+        android:id="@+android:id/secondaryProgress">
+    <scale android:scaleWidth="100%"
+        android:scaleHeight="100%"
+    android:drawable="@drawable/barra_nera"/>
+    </item>
+
+    <item
+        android:id="@+android:id/progress">
+    <scale android:scaleWidth="100%"
+        android:drawable="@drawable/barra_arancione" />
+    </item>
+
+</layer-list>

@@ -22,6 +22,7 @@ public class Sender {
         this.masterPhone = number;
     }
 
+    @Deprecated
     public void setCellPhone(int number) {
         this.cellPhone = number;
     }

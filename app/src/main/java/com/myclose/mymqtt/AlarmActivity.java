@@ -10,18 +10,26 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.myclose.mymqtt.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by jackb on 01/06/2016.
+ * <pre>
+ * Questa activity viene invocata in caso di messaggi di allarme.
+ *     variabili di ingresso per il tipo di allarme:
+ *     1: lock signal lost
+ *     2: movement alarm
+ *
+ *     Cliccando sul tasto centrale, viene richiesta la posizione, attraverso un oggetto Sender
+ *     @author Giacomo
+ *     @version 1.01
+ *     @see Sender
+ *     @see MyCloseMenuActivity
+ *     @see MessageAnalyzer
+ *     </pre>
  */
 
-/*
-questa activity viene aperta quando c'è un allarme di qualunque cosa
- */
 public class AlarmActivity extends Activity {
     /*
     tipo di allarme:
@@ -77,6 +85,9 @@ public class AlarmActivity extends Activity {
         setAnimation();
     }
 
+    /**
+     * Metodo che legge i parametri di ingresso alla classe, determinando il tipo di allarme passato.
+     */
     private void read(){
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -87,6 +98,9 @@ public class AlarmActivity extends Activity {
             setAlarmType(0);
     }
 
+    /**
+     * Questo metodo viene chiamato per caricare i dati dal DB. I dati necessari sono Id del master e numero di telefono.
+     */
     private void loadFromdb() {
         Utente u = myDbInstance.getUtente();
         DEV_MASTER_ID = u.getIdMaster();
@@ -95,6 +109,9 @@ public class AlarmActivity extends Activity {
         messageSender.setMasterID(DEV_MASTER_ID);
     }
 
+    /**
+     * Metodo che imposta il background dell'allarme di colore scuro.
+     */
     private void setDarkAlarmBackground () {
         switch (this.alarmType) {
             case LOCK_LOST:
@@ -117,6 +134,12 @@ public class AlarmActivity extends Activity {
         }
     }
 
+    /**
+     * <pre>
+     * Metodo che imposta l'animazione in base al tipo di allarme.
+     * L'alternanza delle immagini è di 0.5 secondi.
+     * </pre>
+     */
     private void setAnimation () {
         AnimationDrawable animation = new AnimationDrawable();
         if (alarmType == 1) {
@@ -132,17 +155,28 @@ public class AlarmActivity extends Activity {
         animation.start();
     }
 
-    public void setAlarmType (int value) {
+    /**
+     * Metodo per settare il valore di alarmType, in base al tipo di allarme in arrivo
+     * @param value il valore passato in ingresso all'activity
+     */
+    private void setAlarmType (int value) {
         this.alarmType = value;
     }
 
 
+    /**
+     * Metodo per la richiesta di posizione
+     * @param v la view relativa all''activity necessaria per aprire il toast
+     */
     public void getPosition(View v) {
-        Toast.makeText(getApplicationContext(), "CONFIRMED POSITION REQUESTED", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "POSITION REQUESTED", Toast.LENGTH_LONG).show();
         messageSender.AcquisisciPosizioneMessage();
         closeActivity();
     }
 
+    /**
+     * Metodo per chiudere l'activity e tornare alla precedente
+     */
     private void closeActivity () {
         AlarmActivity.this.finish();
     }

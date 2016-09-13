@@ -31,8 +31,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MQTTT">
-        </activity>
         <service android:name="org.eclipse.paho.android.service.MqttService" >
         </service>
     </application>
